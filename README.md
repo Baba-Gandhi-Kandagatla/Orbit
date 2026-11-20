@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Orbit is an installable planner that brings daily tasks and recurring habits into one view. It also tracks goals, reflections and activity over time.
+I built Orbit because a task and a habit need different kinds of checklists. A task has a finish line. A habit needs to show up again tomorrow. I wanted to see both when I sat down to plan the day.
 
 ## Tech stack
 
@@ -16,7 +16,7 @@ JavaScript and browser local storage power the planner. A service worker support
 
 ## The process
 
-I designed and built Orbit independently. The main design question was how to handle a task that can be finished and a habit that comes back tomorrow. Tasks have priorities and due dates. Habits have a weekly target and a quick check-in. The Today view brings them together so planning the day takes one visit.
+I designed and built the planner myself. I gave tasks a priority and due date, and habits a weekly target and quick check-in. I put them side by side in Today so checking off a task and logging a habit each take one visit.
 
 Local profiles persist in the current browser. Use **Settings → Export backup** before clearing browser data or moving a local profile. With Supabase configured, Orbit saves changes locally first and syncs the profile to the signed-in account. The repository includes the database schema and configuration steps. [Cloud setup guide](docs/CLOUD_SETUP.md)
 
@@ -32,7 +32,7 @@ For a reading habit measured in pages, these entries produce three distinct poin
 
 ## How it can be improved
 
-The cloud copy stores a profile in one JSON document. Testing overlapping offline edits from two devices would help establish how clients should reconcile changes to the same task.
+The cloud copy stores a profile in one JSON document. I’d test what happens when I edit the same task offline on two devices, then reconnect them in a different order.
 
 ## How to run
 
