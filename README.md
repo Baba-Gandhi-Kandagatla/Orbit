@@ -1,75 +1,27 @@
 # Orbit
 
-A calm, local-first task, habit, goal, and reflection tracker. It works as an installable web app on Android, macOS, and Windows.
+Orbit is an installable planner for tasks, habits, goals and reflections. It stores activity in the browser and supports optional cross-device sync through Supabase. A habit can track both completion and a measured quantity, such as minutes practiced or pages read.
 
-## Project structure
+## Run locally
 
-```text
-index.html              UI shell and forms
-styles.css              responsive design system
-app.js                  tracker UI and interactions
-src/config.js           deployment configuration
-src/cloud.js            Supabase authentication and sync
-supabase/schema.sql     secure database schema and policies
-docs/CLOUD_SETUP.md     cloud setup instructions
-server.js               dependency-free Node development server
-```
+With Node.js 18 or later, run `npm start` from the repository root and open `http://localhost:8080`. The development server uses Node's built-in modules. In a supported browser, use the install option to open Orbit as a standalone app.
 
-## Run it
+## Calendar and analytics
 
-```bash
-npm start
-```
+- Schedule one-time or recurring items. Monthly items scheduled on the 31st fall on the last day of shorter months.
+- Log a daily quantity independently of the completion checkbox. In analytics, a recorded zero appears as a value and a missing entry appears as a gap.
+- Pin an item to revisit its activity by week, month or year. Orbit calculates history for the selected items and refreshes it when the underlying activity changes.
 
-Then open `http://localhost:8080`. No package installation is required.
+## Storage and sync
 
-## Item analytics and quantities
+Local profiles persist in the current browser. Use **Settings → Export backup** before clearing browser data or moving a local profile. With Supabase configured, Orbit saves changes locally first and syncs the profile to the signed-in account. The repository includes the database schema and configuration steps. [Cloud setup guide](docs/CLOUD_SETUP.md)
 
-- Edit a task or habit and optionally set a daily quantity target and unit.
-- Use **Log** on a task, or **Log quantity** in its analytics panel, to record a daily amount. Saving replaces that date's value; completion checkboxes remain separate.
-- Open Analytics and choose an item. Pin it to restore its panel on subsequent visits.
-- Week, month and year calendars and graphs are calculated only for selected/pinned items, with results cached until a save or date-range change.
-- Missing quantity entries appear as graph gaps; a recorded zero remains an actual zero.
-- Profile storage is still a single Supabase JSON document. This reduces analytics calculation, not the size of the initial profile download.
+## Development and deployment
 
-## Production build
+| Command | Result |
+| --- | --- |
+| `npm run check` | Check JavaScript syntax. |
+| `npm test` | Run calendar, analytics and startup tests, including session restoration. |
+| `npm run build` | Generate the static site in `dist/`. |
 
-```bash
-npm run build
-```
-
-The deployable static website is generated in `dist/`.
-
-## Free deployment — Cloudflare Pages
-
-### Cloudflare Workers (Git-connected deployment)
-
-If your dashboard uses a deploy command, you created a Workers project. This is supported by `wrangler.jsonc`:
-
-- Build command: `npm run build`
-- Deploy command: `npm run deploy`
-- Root directory: repository root
-
-Wrangler runs the build before deployment and uploads only `dist/`. Never configure the asset directory as `.`: that includes dependencies and private source files.
-
-### Cloudflare Pages
-
-Connect the GitHub repository to Cloudflare Pages and use:
-
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Production branch: `main`
-
-Every push to `main` will deploy automatically.
-
-## Install
-
-- Android/desktop Chrome or Edge: open the app and use **Install**.
-- Safari on macOS: **File → Add to Dock**.
-- Each username has separate password-protected data in the current browser. Use **Settings → Export backup** before clearing browser data or changing devices.
-
-## Free deployment
-
-Without Supabase configuration, profiles and activity are stored in browser `localStorage`. With Supabase configured, data is saved locally first and automatically synced to the user’s cloud account.
-
-Follow [docs/CLOUD_SETUP.md](docs/CLOUD_SETUP.md) for free cross-device accounts and protected cloud storage.
+For Cloudflare Pages, use `main` as the production branch, `npm run build` as the build command and `dist` as the output directory. The Workers configuration also supports `npm run deploy` after the build. Publish only the generated `dist/` directory.
