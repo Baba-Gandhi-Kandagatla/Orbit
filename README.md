@@ -12,6 +12,16 @@ With Node.js 18 or later, run `npm start` from the repository root and open `htt
 - Log a daily quantity independently of the completion checkbox. In analytics, a recorded zero appears as a value and a missing entry appears as a gap.
 - Pin an item to revisit its activity by week, month or year. Orbit calculates history for the selected items and refreshes it when the underlying activity changes.
 
+## Example activity log
+
+For a reading habit measured in pages, these entries produce three distinct points in the activity history.
+
+| Day | Entry | Chart |
+| --- | --- | --- |
+| Monday | 12 pages | A point at 12 |
+| Tuesday | 0 pages | A point at zero |
+| Wednesday | No entry | A gap |
+
 ## Storage and sync
 
 Local profiles persist in the current browser. Use **Settings → Export backup** before clearing browser data or moving a local profile. With Supabase configured, Orbit saves changes locally first and syncs the profile to the signed-in account. The repository includes the database schema and configuration steps. [Cloud setup guide](docs/CLOUD_SETUP.md)
@@ -25,3 +35,7 @@ Local profiles persist in the current browser. Use **Settings → Export backup*
 | `npm run build` | Generate the static site in `dist/`. |
 
 For Cloudflare Pages, use `main` as the production branch, `npm run build` as the build command and `dist` as the output directory. The Workers configuration also supports `npm run deploy` after the build. Publish only the generated `dist/` directory.
+
+## A useful next step
+
+The cloud copy stores a profile in one JSON document. Testing overlapping offline edits from two devices would help establish how clients should reconcile changes to the same task.
